@@ -1,6 +1,20 @@
 const express = require('express');
 const app = express();
 const port = 8000;
+const bodyParser = require('body-parser');
+const ejs = require('ejs');
+const router = express.Router();
+const indexRouter = require('./routes/index');
+const db = require("./config/mongoose");
+
+// /middleware
+
+app.use(bodyParser.urlencoded({ extended : true}));
+app.use('/' , indexRouter );
+
+app.set('view engine' , 'ejs');
+app.set('views' , './views');
+
 
 app.listen(port , function(err){
 if(err)
@@ -12,7 +26,3 @@ console.log(`error is running : ${err}`);
 }
 })  
 
-app.get('/' , function(req , res){
-
-    res.sendFile(__dirname + "")
-})
