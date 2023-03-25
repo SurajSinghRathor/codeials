@@ -1,5 +1,5 @@
 const user = require("../models/user");
-
+// this is the model "user" which content multiple document or users 
 module.exports.profile = function(req , res){
   //only authenticated user can see the profile 
    
@@ -11,13 +11,18 @@ module.exports.profile = function(req , res){
      //using async  await
 
      user.findById(req.cookies.user_id)
-     .then((newuser)=> {
+     .then((user)=> {
       //here promise is fullfilled so it may be user found or not found (resolve , reject)
 
-      if(newuser){
-        //if user found
+      if(user){
+        //if user found then showing his detailes
+        return res.render("profile" , {
+              
+          title:"user profile",
+          user : user,
+          
 
-        return res.render("profile");
+        });
 
       }else
       {
