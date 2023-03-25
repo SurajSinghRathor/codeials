@@ -6,9 +6,11 @@ const ejs = require('ejs');
 const router = express.Router();
 const indexRouter = require('./routes/index');
 const db = require("./config/mongoose");
+const cookieParser = require("cookie-parser");
 
 // /middleware
 
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended : true}));
 app.use('/' , indexRouter );
 

@@ -1,7 +1,47 @@
 const user = require("../models/user");
 
 module.exports.profile = function(req , res){
-    res.send("this is users profile");
+  //only authenticated user can see the profile 
+   
+  if(req.cookies.user_id){
+    //if server authenticate using cookie from browser then show
+     //checking if the the person with user id in cookie is there in db or not
+
+     //finding a user using used id which is there in cookie is time taking so 
+     //using async  await
+
+     user.findById(req.cookies.user_id)
+     .then((newuser)=> {
+      //here promise is fullfilled so it may be user found or not found (resolve , reject)
+
+      if(newuser){
+        //if user found
+
+        return res.render("profile");
+
+      }else
+      {
+        return res.redirect("/user/signin");
+      }
+        
+         
+
+
+     })
+     .catch((err) => {
+      //this is just for catching the error
+      console.log("error finding the user");
+
+     })
+    
+
+
+  }else{
+    return res.redirect("/user/signin");
+  }
+
+
+
 }
 
 module.exports.signin = function(req , res){
@@ -66,7 +106,9 @@ module.exports.CreateSession = function(req , res){
                 return res.redirect("back");
             }
             
-            return res.render("success");
+           //Handle Session Creation
+           res.cookie('user_id' , user.id);
+           return res.redirect("/user/profile");
 
 
          }
