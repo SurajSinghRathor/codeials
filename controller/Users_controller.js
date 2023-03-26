@@ -95,39 +95,46 @@ module.exports.create = async function(req, res) {
   }
 };
 
+//login / Authenticating using passport.js
+
+module.exports.CreateSession = function(req , res){
+            return res.redirect("/");
+}
+
+
 
 
 //login page mechanism
-module.exports.CreateSession = function(req , res){
+// module.exports.CreateSession = function(req , res){
    
-    //find the user
-    user.findOne({email : req.body.email})
-    .then((user)=> {
-         //handle user found
-         if(user){
+//     //find the user
+//     user.findOne({email : req.body.email})
+//     .then((user)=> {
+//          //handle user found
+//          if(user){
 
-            if(user.password != req.body.password)
-            {
-                return res.redirect("back");
-            }
+//             if(user.password != req.body.password)
+//             {
+//                 return res.redirect("back");
+//             }
             
-           //Handle Session Creation
-           res.cookie('user_id' , user.id);
-           return res.redirect("/user/profile");
+//            //Handle Session Creation
+//            res.cookie('user_id' , user.id);
+//            return res.redirect("/user/profile");
 
 
-         }
+//          }
 
 
 
-    })
-    .catch((error)=> {
-        console.log("error is there");
-        return res.redirect("back");
+//     })
+//     .catch((error)=> {
+//         console.log("error is there");
+//         return res.redirect("back");
 
-    })
+//     })
 
    
 
-}
+// }
 
